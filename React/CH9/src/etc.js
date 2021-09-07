@@ -1,9 +1,11 @@
-function tagged(...args) {
-    console.log(args);
-  }
-  tagged`hello ${{ foo: "bar" }} ${() => "world"}`;
-  import styled from "styled-components";
-  
-  const MyComponent = styled.div`
-    font-size: 2rem;
-  `;
+import styled from "styled-components";
+Const MyInput = styled('input')`
+background: gray;
+`
+
+const MyComponent = styled.div`
+  font-size: 2rem;
+`;
+const StyledLink = styled(Link)`
+color: blue;
+` 
