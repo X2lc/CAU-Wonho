@@ -1,12 +1,9 @@
-:local .wrapper {
-    /* 스타일 */
-    }
-    :local {
-    .wrapper {
-      /* 스타일 */
-    }
-    } 
 function tagged(...args) {
-  console.log(args);
-}
-tagged`hello ${{ foo: "bar" }} ${() => "world"}`;
+    console.log(args);
+  }
+  tagged`hello ${{ foo: "bar" }} ${() => "world"}`;
+  import styled from "styled-components";
+  
+  const MyComponent = styled.div`
+    font-size: 2rem;
+  `;
