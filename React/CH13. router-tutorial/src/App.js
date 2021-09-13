@@ -2,34 +2,16 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import About from './About'
 import Home from './Home'
-import Profile from './Profile'
 import Profiles from './Profiles'
+import HistorySample from './HistorySample'
 
 const App = () => {
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
-        <li>
-          <Link to="/about">소개</Link>
-        </li>
-        <li>
-          <Link to="/profiles">프로필</Link>
-        </li>
-        <li>
-          <Link to="/profile/velopert">velopert 프로필</Link>
-        </li>
-        <li>
-          <Link to="/profile/gildong">gildong 프로필</Link>
-        </li>
-      </ul>
-      <hr />
+@@ -28,6 +29,7 @@ const App = () => {
       <Route path="/" component={Home} exact={true} />
       <Route path={['/about', '/info']} component={About} />
-      <Route pate="/profile/:username" component={Profile} />
       <Route pate="/profiles" component={Profiles} />
+      <Route path="/history" component={HistorySample} />
 
     </div>
   )
