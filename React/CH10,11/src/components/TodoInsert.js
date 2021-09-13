@@ -1,7 +1,6 @@
 import React from 'react';
 import { MdAdd } from 'react-icons/md';
 import './TodoInsert.scss';
-
 const TodoInsert = () => {
   return (
     <form className="TodoInsert">
@@ -14,3 +13,4 @@ const TodoInsert = () => {
 };
 
 export default TodoInsert;
+export default TodoInsert; // 설명추가
