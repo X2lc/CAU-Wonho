@@ -1,3 +1,11 @@
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const biggerThanFive = array.filter((number) => number > 5);
-// 결과: [6, 7, 8, 9, 10]
+const nextComplexObject = {
+    ...complexObject,
+    objectInside: {
+      ...complexObject.objectInside,
+      enabled: false,
+    },
+  };
+  console.log(complexObject === nextComplexObject); // false
+  console.log(complexObject.objectInside === nextComplexObject.objectInside); // false
+  console.log(complexObject === nextComplexObject); //  false
+  console.log(complexObject.objectInside === nextComplexObject.objectInside); //  false
