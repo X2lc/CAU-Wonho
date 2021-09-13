@@ -1,7 +1,5 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import React, { useRef, useCallback, useState } from "react";
+import produce from "immer";
 
 const App = () => {
   const nextId = useRef(1);
@@ -10,7 +8,6 @@ const App = () => {
     array: [],
     uselessValue: null,
   });
-
   // input 수정을 위한 함수
   const onChange = useCallback(
     (e) => {
@@ -19,10 +16,14 @@ const App = () => {
         ...form,
         [name]: [value],
       });
+      setForm(
+        produce(form, (draft) => {
+          draft[name] = value;
+        })
+      );
     },
     [form]
   );
-
   // form 등록을 위한 함수
   const onSubmit = useCallback(
     (e) => {
@@ -37,6 +38,11 @@ const App = () => {
         ...data,
         array: data.array.concat(info),
       });
+      setData(
+        produce(data, (draft) => {
+          draft.array.push(info);
+        })
+      );
 
       setForm({
         name: "",
@@ -46,7 +52,6 @@ const App = () => {
     },
     [data, form.name, form.username]
   );
-
   // 항목을 삭제하는 함수
   const onRemove = useCallback(
     (id) => {
@@ -54,27 +59,18 @@ const App = () => {
         ...data,
         array: data.array.filter((info) => info.id !== id),
       });
+      setData(
+        produce(data, (draft) => {
+          draft.array.splice(
+            draft.array.findIndex((info) => info.id === id),
+            1
+          );
+        })
+      );
     },
     [data]
   );
-
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
     <div>
       <form onSubmit={onSubmit}>
         <input
@@ -102,7 +98,5 @@ function App() {
       </div>
     </div>
   );
-}
 };
-
 export default App;
