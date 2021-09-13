@@ -1,6 +1,5 @@
 import React, { useRef, useCallback, useState } from "react";
 import produce from "immer";
-
 const App = () => {
   const nextId = useRef(1);
   const [form, setForm] = useState({ name: "", username: "" });
@@ -12,12 +11,9 @@ const App = () => {
   const onChange = useCallback(
     (e) => {
       const { name, value } = e.target;
-      setForm({
-        ...form,
-        [name]: [value],
-      });
       setForm(
         produce(form, (draft) => {
+        produce((draft) => {
           draft[name] = value;
         })
       );
@@ -34,16 +30,12 @@ const App = () => {
         username: form.username,
       };
 
-      setData({
-        ...data,
-        array: data.array.concat(info),
-      });
       setData(
         produce(data, (draft) => {
+        produce((draft) => {
           draft.array.push(info);
         })
       );
-
       setForm({
         name: "",
         username: "",
@@ -51,14 +43,12 @@ const App = () => {
       nextId.current += 1;
     },
     [data, form.name, form.username]
+    [form.name, form.username]
   );
+
   // 항목을 삭제하는 함수
   const onRemove = useCallback(
     (id) => {
-      setData({
-        ...data,
-        array: data.array.filter((info) => info.id !== id),
-      });
       setData(
         produce(data, (draft) => {
           draft.array.splice(
@@ -70,6 +60,17 @@ const App = () => {
     },
     [data]
   );
+  const onRemove = useCallback((id) => {
+    setData(
+      produce((draft) => {
+        draft.array.splice(
+          draft.array.findIndex((info) => info.id === id),
+          1
+        );
+      })
+    );
+  }, []);
+
   return (
     <div>
       <form onSubmit={onSubmit}>
