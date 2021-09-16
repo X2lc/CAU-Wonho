@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import React from 'react'
+import NewsList from './components/NewsList'
+
 const App = () => {
   const [data, setData] = useState(null);
   const onClick = async () => {
     try {
       const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/todos/1',
         'http://newsapi.org/v2/top-headlines?country=kr&apiKey=1dff0610147149da9758cbaa531976ed',
       );
       setData(response.data);
@@ -22,4 +24,7 @@ const App = () => {
     </div>
   );
 };
-export default App;
+  return <NewsList />;
+}
+
+export default App; 
