@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+import ColorBox from './components/ColorBox';
+const App = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,8 +21,12 @@ function App() {
           Learn React
         </a>
       </header>
+    <div>
+      <ColorBox />
     </div>
   );
 }
+};
 
 export default App;
+export default App; 
