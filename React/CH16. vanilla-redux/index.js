@@ -36,10 +36,7 @@ function reducer(state = initialState, action) {
             return state;
     }
 }
-
-const store = createStore(reducer); 
 const store = createStore(reducer);
-
 const render = () => {
     const state = store.getState(); // 현재 상태를 불러옵니다.
     // 토글 처리
@@ -53,5 +50,6 @@ const render = () => {
 };
 
 
-
 render();
+
+store.subscrib(render);
