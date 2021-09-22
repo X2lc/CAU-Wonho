@@ -1,18 +1,17 @@
 const nodeExternals = require('webpack-node=externals')
+const nodeExternals = require('webpack-node-externals')
 const paths = require('./paths');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent'); // CSS Module의 고유 className을 만들 때 필요한 옵션
-
 const webpack = require('webpack')
 const getClientEnvironment = require('./env')
-
 const cssRegex = /.css$/;
 const cssModuleRegex = /.module.css$/;
 const sassRegex = /.(scss|sass)$/;
 const sassModuleRegex = /.module.(scss|sass)$/;
-const nodeExternals = require('webpack-node=externals')
 
 const publicUrl = paths.servedPath.slice(0, -1);
 const env = getClientEnvironment(publicUrl);
+const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
 
 
@@ -25,6 +24,7 @@ module.exports = {
         filename: 'server.js', // 파일 이름
         chunkFilename: 'js/[name].chunk.js', // 청크 파일 이름,
         publicPath: paths.servedPath, // 정적 파일이 제공될 경로
+        publicPath: paths.publicUrlOrPath, // 정적 파일이 제공될 경로
     },
     module: {
         rules: [
@@ -135,9 +135,8 @@ module.exports = {
     resolve: {
         modules: ['node_modules']
     },
-    externals: [nodeExternals()]
     externals: [nodeExternals()],
     plugins: [
         new webpack.DefinePlugin(env.stringified)
     ]
-}; 
+};
