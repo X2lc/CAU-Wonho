@@ -1,14 +1,11 @@
 'use strict';
-
 const path = require('path');
 const fs = require('fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
-
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
 // webpack needs to know it to put the right <script> hrefs into HTML even in
@@ -20,7 +17,6 @@ const publicUrlOrPath = getPublicUrlOrPath(
   require(resolveApp('package.json')).homepage,
   process.env.PUBLIC_URL
 );
-
 const moduleFileExtensions = [
   'web.mjs',
   'mjs',
@@ -34,20 +30,16 @@ const moduleFileExtensions = [
   'web.jsx',
   'jsx',
 ];
-
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
   );
-
   if (extension) {
     return resolveFn(`${filePath}.${extension}`);
   }
-
   return resolveFn(`${filePath}.js`);
 };
-
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -65,8 +57,9 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrlOrPath,
+  ssrIndexJs: resolveApp('src/index.server.js'), //서버 사이드 렌더링 엔트리
+  ssrBuild: resolveApp('dist'), //웹팩 처리 후 저장 경로
 };
-
 
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
