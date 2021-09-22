@@ -1,26 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
-import rootReducer from './modules';
+import { combineReducers } from 'redux';
+import users from './users';
+import users, { usersSaga } from './users';
+import { all } from 'redux-saga/effects';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
-);
+export function* rootSaga() {
+    yield all([usersSaga()]);
+}
 
-serviceWorker.unregister();
+
+
+const rootReducer = combineReducers({ users });
+export default rootReducer;
