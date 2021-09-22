@@ -10,12 +10,12 @@ import thunk from 'redux-thunk';
 import rootReducer from './modules';
 
 
+const store = createStore(rootReducer, applyMiddleware(thunk));
 const store = createStore(
   rootReducer,
-  window.__PRELOADEDSTATE__, // 이 값을 초기 상태로 사용함
+  window.__PRELOADED_STATE__,
   applyMiddleware(thunk)
 );
-const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 

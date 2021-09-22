@@ -14,7 +14,7 @@ const UsersContainer = ({ users, getUsers }) => {
     return <Users users={users} />;
     return (
         <>
-            <Users users={users} />
+            <Users users={users} />;
             <Preloader resolve={getUsers} />
         </>
     );
@@ -28,5 +28,4 @@ export default connect(
     {
         getUsers
     }
-)(UsersContainer); 
-)(UsersContainer);  
+)(UsersContainer);
