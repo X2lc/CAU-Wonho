@@ -13,8 +13,6 @@ export const write = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
-export const list = (ctx) => {};
 export const list = async (ctx) => {
   try {
     const posts = await Post.find().exec();
@@ -25,6 +23,20 @@ export const list = async (ctx) => {
 };
 
 export const read = (ctx) => {};
+export const read = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const post = await Post.findById(id).exec();
+    if (!post) {
+      ctx.status = 404; // Not Found
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
 
 export const remove = (ctx) => {};
+
 export const update = (ctx) => {};
