@@ -1,25 +1,7 @@
 {
-    "env": {
-        "commonjs": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "prettier"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaVersion": 12
-    },
-    "rules": {}
-} 
   "env": {
     "commonjs": true,
-    "es2021": true,
+    "es6": true,
     "node": true
   },
   "extends": ["eslint:recommended", "prettier"],
@@ -28,7 +10,9 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 12
+    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "rules": {
     "no-unused-vars": "warn",
