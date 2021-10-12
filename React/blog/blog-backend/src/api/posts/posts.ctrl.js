@@ -37,9 +37,11 @@ export const write = async (ctx) => {
     ctx.throw(500, e);
   }
 };
+
 export const list = async (ctx) => {
   try {
     const posts = await Post.find().exec();
+    const posts = await Post.find().sort({ _id: -1 }).exec();
     ctx.body = posts;
   } catch (e) {
     ctx.throw(500, e);
@@ -67,7 +69,6 @@ export const remove = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
 export const update = async (ctx) => {
   const { id } = ctx.params;
   // write에서 사용한 schema와 비슷한데, required()가 없습니다.
@@ -76,7 +77,6 @@ export const update = async (ctx) => {
     body: Joi.string(),
     tags: Joi.array().items(Joi.string()),
   });
-
   // 검증하고 나서 검증 실패인 경우 에러 처리
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
