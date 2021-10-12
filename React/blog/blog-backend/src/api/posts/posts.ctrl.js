@@ -1,8 +1,6 @@
 import Post from '../../models/post';
-import mongoose, { set } from 'mongoose';
 import mongoose from 'mongoose';
 import Joi from '@hapi/joi';
-
 const { ObjectId } = mongoose.Types;
 export const checkObjectId = (ctx, next) => {
   const { id } = ctx.params;
@@ -50,10 +48,22 @@ export const list = async (ctx) => {
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
+      .lean()
       .exec();
     const postCount = await Post.countDocuments().exec();
     ctx.set('Last-Page', Math.ceil(postCount / 10));
-    ctx.body = posts;
+    ctx.body = posts
+      .map((post) => post.toJSON())
+      .map((post) => ({
+        ...post,
+        body:
+          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+      }));
+    ctx.body = posts.map((post) => ({
+      ...post,
+      body:
+        post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+    }));
   } catch (e) {
     ctx.throw(500, e);
   }
