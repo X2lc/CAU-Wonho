@@ -21,8 +21,6 @@ export const list = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
-export const read = (ctx) => {};
 export const read = async (ctx) => {
   const { id } = ctx.params;
   try {
@@ -38,5 +36,14 @@ export const read = async (ctx) => {
 };
 
 export const remove = (ctx) => {};
+export const remove = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    await Post.findByIdAndRemove(id).exec();
+    ctx.status = 204; // No Content (성공하기는 했지만 응답할 데이터는 없음)
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
 
 export const update = (ctx) => {};
