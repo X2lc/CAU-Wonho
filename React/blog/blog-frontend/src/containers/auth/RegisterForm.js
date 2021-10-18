@@ -70,8 +70,15 @@ const RegisterForm = ({ history }) => {
       console.log('check API 성공');
       console.log(user);
       history.push('/');
+      history.push('/'); // 홈 화면으로 이동
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
     }
   }, [history, user]);
+
   return (
     <AuthForm
       type="register"
@@ -82,6 +89,4 @@ const RegisterForm = ({ history }) => {
     />
   );
 };
-
-export default withRouter(RegisterForm);
 export default withRouter(RegisterForm); //코드 수정
