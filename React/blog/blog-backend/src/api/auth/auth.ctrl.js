@@ -32,22 +32,25 @@ export const register = async (ctx) => {
     });
     await user.setPassword(password);
     await user.save();
+
     ctx.body = user.serialize();
+
+    const token = user.generateToken();
+    ctx.cookies.set('access_token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7일
+      httpOnly: true,
+    });
   } catch (e) {
     ctx.throw(500, e);
   }
 };
-
-export const login = async (ctx) => {};
 export const login = async (ctx) => {
   const { username, password } = ctx.request.body;
-
   // username, password가 없으면 에러 처리
   if (!username || !password) {
     ctx.status = 401; // Unauthorized
     return;
   }
-
   try {
     const user = await User.findByUsername(username);
     // 계정이 존재하지 않으면 에러 처리
@@ -62,10 +65,14 @@ export const login = async (ctx) => {
       return;
     }
     ctx.body = user.serialize();
+    const token = user.generateToken();
+    ctx.cookies.set('access_token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7일
+      httpOnly: true,
+    });
   } catch (e) {
     ctx.throw(500, e);
   }
 };
-
 export const check = async (ctx) => {};
 export const logout = async (ctx) => {};
