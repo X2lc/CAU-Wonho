@@ -52,14 +52,22 @@ const textMap = {
   login: '로그인',
   register: '회원가입',
 };
+/**
+ * 에러를 보여 줍니다.
+ */
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
 
-const AuthForm = ({ type }) => {
 const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
   return (
     <AuthFormBlock>
       <h3>{text}</h3>
-      <form>
       <form onSubmit={onSubmit}>
         <StyledInput
           autoComplete="username"
@@ -86,6 +94,8 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.passwordConfirm}
           />
         )}
+        <ErrorMessage>에러 발생!</ErrorMessage>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth style={{ marginTop: '1rem' }}>
           {text}
         </ButtonWithMarginTop>
