@@ -72,8 +72,6 @@ export const login = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
-export const check = async (ctx) => {};
 export const check = async (ctx) => {
   const { user } = ctx.state;
   if (!user) {
@@ -83,4 +81,5 @@ export const check = async (ctx) => {
   }
   ctx.body = user;
 };
+
 export const logout = async (ctx) => {};
