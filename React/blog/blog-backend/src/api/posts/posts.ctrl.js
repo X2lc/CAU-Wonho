@@ -17,9 +17,7 @@ export const write = async (ctx) => {
     body: Joi.string().required(),
     tags: Joi.array().items(Joi.string()).required(), // 문자열로 이루어진 배열
   });
-
   // 검증하고 나서 검증 실패인 경우 에러 처리
-  const result = Joi.validate(ctx.request.body, schema);
   const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400; // Bad Request
@@ -31,6 +29,7 @@ export const write = async (ctx) => {
     title,
     body,
     tags,
+    user: ctx.state.user,
   });
   try {
     await post.save();
