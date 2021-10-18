@@ -17,8 +17,10 @@ export const write = async (ctx) => {
     body: Joi.string().required(),
     tags: Joi.array().items(Joi.string()).required(), // 문자열로 이루어진 배열
   });
+
   // 검증하고 나서 검증 실패인 경우 에러 처리
   const result = Joi.validate(ctx.request.body, schema);
+  const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -52,13 +54,6 @@ export const list = async (ctx) => {
       .exec();
     const postCount = await Post.countDocuments().exec();
     ctx.set('Last-Page', Math.ceil(postCount / 10));
-    ctx.body = posts
-      .map((post) => post.toJSON())
-      .map((post) => ({
-        ...post,
-        body:
-          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
-      }));
     ctx.body = posts.map((post) => ({
       ...post,
       body:
