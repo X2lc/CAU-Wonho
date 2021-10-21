@@ -4,6 +4,8 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import { Helmet } from 'react-helmet-async';
+
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -21,8 +23,6 @@ const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
 `;
-
-const PostViewer = ({ post, error, loading }) => {
 const PostViewer = ({ post, error, loading, actionButtons }) => {
   // 에러 발생 시
   if (error) {
@@ -35,8 +35,12 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     return null;
   }
   const { title, body, user, publishedDate, tags } = post;
+
   return (
     <PostViewerBlock>
+      <Helmet>
+        <title>{title} - REACTERS</title>
+      </Helmet>
       <PostHead>
         <h1>{title}</h1>
         <SubInfo
