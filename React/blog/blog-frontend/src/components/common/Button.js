@@ -1,10 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
-
-const StyledButton = styled.button`
 const buttonStyle = css`
   border: none;
   border-radius: 4px;
@@ -34,26 +31,19 @@ const buttonStyle = css`
         background: ${palette.cyan[4]};
       }
     `};
+  &:disabled {
+    background: ${palette.gray[3]};
+    color: ${palette.gray[5]};
+    cursor: not-allowed;
+  }
 `;
 
-const Button = ({ to, history, ...rest }) => {
-  const onClick = (e) => {
-    // to가 있다면 to로 페이지 이동
-    if (to) {
-      history.push(to);
-    }
-    if (rest.onClick) {
-      rest.onClick(e);
-    }
-  };
-  return <StyledButton {...rest} onClick={onClick} />;
 const StyledButton = styled.button`
   ${buttonStyle}
 `;
 const StyledLink = styled(Link)`
   ${buttonStyle}
 `;
-
 const Button = (props) => {
   return props.to ? (
     <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
@@ -61,6 +51,4 @@ const Button = (props) => {
     <StyledButton {...props} />
   );
 };
-
-export default withRouter(Button);
 export default Button;
